@@ -32,14 +32,12 @@ public class MainActivity extends AppCompatActivity {
         playerChoices[0] = Player.NoONE;
         playerChoices[1] = Player.NoONE;
         playerChoices[2] = Player.NoONE;
-        playerChoices[2] = Player.NoONE;
+        playerChoices[3] = Player.NoONE;
         playerChoices[4] = Player.NoONE;
         playerChoices[5] = Player.NoONE;
         playerChoices[6] = Player.NoONE;
         playerChoices[7] = Player.NoONE;
         playerChoices[8] = Player.NoONE;
-
-
     }
 
     public void imageViewIsTapped(View imageView) {
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         int tImageTag = Integer.parseInt(tappedImageView.getTag().toString());
         playerChoices[tImageTag] = currentPlayer;
         if (currentPlayer == Player.ONE) {
-
             tappedImageView.setImageResource(R.drawable.lion);
             currentPlayer = Player.TWO;
         } else if (currentPlayer == Player.TWO) {
@@ -57,10 +54,25 @@ public class MainActivity extends AppCompatActivity {
         }
         tappedImageView.animate().translationXBy(2000).alpha(1).rotation(3600).setDuration(1000);
         for (int[] winnerColumns : winnerRowColumn) {
+
             if (playerChoices[winnerColumns[0]] == playerChoices[winnerColumns[1]] &&
-                    playerChoices[winnerColumns[1]] == playerChoices[winnerColumns[2]] && playerChoices[winnerColumns[0]]!=Player.NoONE
-            ) ;
-            Toast.makeText(this, "Congrats", Toast.LENGTH_SHORT).show();
+                    playerChoices[winnerColumns[1]] == playerChoices[winnerColumns[2]]
+                    && playerChoices[winnerColumns[0]] != Player.NoONE) {
+                String winnerOfGame = "";
+
+                if (currentPlayer == Player.ONE) {
+                    winnerOfGame = "Player Two";
+//                    Toast.makeText(this, "Player Two is the winner", Toast.LENGTH_SHORT).show();
+                } else if (currentPlayer == Player.TWO) {
+                    winnerOfGame = "Player One";
+//                    Toast.makeText(this, "Player One is the winner", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(this, winnerOfGame + " is the winner", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+
         }
 
     }
