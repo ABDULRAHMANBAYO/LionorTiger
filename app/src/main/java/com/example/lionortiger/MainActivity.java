@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        for (int i = 0; i < playerChoices.length; i++) {
-            playerChoices[i] = Player.NoONE;
-        }
+        setPlayerChoices();
+//        for (int i = 0; i < playerChoices.length; i++) {
+//            playerChoices[i] = Player.NoONE;
+//        }
 
         resetBtn = findViewById(R.id.resetButton);
         gridView = findViewById(R.id.gridLayout);
@@ -89,11 +89,15 @@ public class MainActivity extends AppCompatActivity {
             imageView.setAlpha(0.0f);
         }
         currentPlayer = Player.ONE;
-        for (int i = 0; i < playerChoices.length; i++) {
-            playerChoices[i] = Player.NoONE;
-        }
+        setPlayerChoices();
         gameOver = false;
         resetBtn.setVisibility(View.INVISIBLE);
 
+    }
+
+    public void setPlayerChoices() {
+        for (int i = 0; i < playerChoices.length; i++) {
+            playerChoices[i] = Player.NoONE;
+        }
     }
 }
