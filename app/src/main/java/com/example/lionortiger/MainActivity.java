@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     int[][] winnerRowColumn = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8},
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
             {0, 4, 8}, {2, 4, 6}};
-    PlayerSelection[][] playerSelections = new PlayerSelection[3][3];
+    private boolean gameOver = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,38 +42,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void imageViewIsTapped(View imageView) {
         ImageView tappedImageView = (ImageView) imageView;
-        tappedImageView.setTranslationX(-2000);
         int tImageTag = Integer.parseInt(tappedImageView.getTag().toString());
-        playerChoices[tImageTag] = currentPlayer;
-        if (currentPlayer == Player.ONE) {
-            tappedImageView.setImageResource(R.drawable.lion);
-            currentPlayer = Player.TWO;
-        } else if (currentPlayer == Player.TWO) {
-            tappedImageView.setImageResource(R.drawable.tiger);
-            currentPlayer = Player.ONE;
-        }
-        tappedImageView.animate().translationXBy(2000).alpha(1).rotation(3600).setDuration(1000);
-        for (int[] winnerColumns : winnerRowColumn) {
-
-            if (playerChoices[winnerColumns[0]] == playerChoices[winnerColumns[1]] &&
-                    playerChoices[winnerColumns[1]] == playerChoices[winnerColumns[2]]
-                    && playerChoices[winnerColumns[0]] != Player.NoONE) {
-                String winnerOfGame = "";
-
-                if (currentPlayer == Player.ONE) {
-                    winnerOfGame = "Player Two";
-//                    Toast.makeText(this, "Player Two is the winner", Toast.LENGTH_SHORT).show();
-                } else if (currentPlayer == Player.TWO) {
-                    winnerOfGame = "Player One";
-//                    Toast.makeText(this, "Player One is the winner", Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(this, winnerOfGame + " is the winner", Toast.LENGTH_SHORT).show();
-
-
+        if (playerChoices[tImageTag] == Player.NoONE && gameOver == false) {
+            tappedImageView.setTranslationX(-2000);
+            playerChoices[tImageTag] = currentPlayer;
+            if (currentPlayer == Player.ONE) {
+                tappedImageView.setImageResource(R.drawable.lion);
+                currentPlayer = Player.TWO;
+            } else if (currentPlayer == Player.TWO) {
+                tappedImageView.setImageResource(R.drawable.tiger);
+                currentPlayer = Player.ONE;
             }
+            tappedImageView.animate().translationXBy(2000).alpha(1).rotation(3600).setDuration(1000);
+            for (int[] winnerColumns : winnerRowColumn) {
 
+                if (playerChoices[winnerColumns[0]] == playerChoices[winnerColumns[1]] &&
+                        playerChoices[winnerColumns[1]] == playerChoices[winnerColumns[2]]
+                        && playerChoices[winnerColumns[0]] != Player.NoONE) {
+                    gameOver = true;
+                    String winnerOfGame = "";
 
+                    if (currentPlayer == Player.ONE) {
+                        winnerOfGame = "Player Two";
+//                    Toast.makeText(this, "Player Two is the winner", Toast.LENGTH_SHORT).show();
+                    } else if (currentPlayer == Player.TWO) {
+                        winnerOfGame = "Player One";
+//                    Toast.makeText(this, "Player One is the winner", Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(this, winnerOfGame + " is the winner", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
-
     }
 }
